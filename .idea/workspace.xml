@@ -4,20 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="9b49c19d-0afd-40cf-a7d1-0461541a6d8a" name="Changes" comment="" />
+=======
+    <list default="true" id="fcae6194-e0f3-4f44-9e7f-b4bc83fa239c" name="Changes" comment="Добавлен файл для исходного кода" />
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< Updated upstream
+=======
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+>>>>>>> Stashed changes
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
+<<<<<<< Updated upstream
   "customColor": "",
   "associatedIndex": 5
 }]]></component>
   <component name="ProjectId" id="2oJdkT3otLkRsd3AVXgQNYuXSjP" />
+=======
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="2oEmjURxVCJdkAxffryMOInI4td" />
+>>>>>>> Stashed changes
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -38,6 +58,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< Updated upstream
       <changelist id="9b49c19d-0afd-40cf-a7d1-0461541a6d8a" name="Changes" comment="" />
       <created>1730591759288</created>
       <option name="number" value="Default" />
@@ -46,4 +67,39 @@
     </task>
     <servers />
   </component>
+=======
+      <changelist id="fcae6194-e0f3-4f44-9e7f-b4bc83fa239c" name="Changes" comment="" />
+      <created>1730443243832</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730443243832</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Добавлен файл для исходного кода">
+      <option name="closed" value="true" />
+      <created>1730448409813</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730448409813</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="Добавлен файл для исходного кода" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлен файл для исходного кода" />
+  </component>
+>>>>>>> Stashed changes
 </project>
