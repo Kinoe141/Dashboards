@@ -117,6 +117,33 @@ data = {
     ]
 }
 
+# Преобразование данных в DataFrame
+df = pd.DataFrame(data)
+
+# Преобразование столбца Дата в datetime
+df['Дата'] = pd.to_datetime(df['Дата'])
+
+# Создание графика активности пользователей по дням
+activity_fig = px.histogram(df, x='Дата', color='Действие', title='Активность пользователей по дням')
+
+# Создание графика количества действий по страницам
+page_actions_fig = px.histogram(df, x='Страница', color='Действие', title='Количество действий по страницам')
+
+# Определение макета дашборда
+app.layout = html.Div(children=[
+    html.H1(children='Дашборд анализа клиентской активности'),
+
+    dcc.Graph(
+        id='activity-over-time',
+        figure=activity_fig
+    ),
+
+    dcc.Graph(
+        id='page-actions',
+        figure=page_actions_fig
+    )
+])
+
 # Запуск приложения
 if __name__ == '__main__':
     app.run_server(debug=True)
