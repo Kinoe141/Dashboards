@@ -165,6 +165,17 @@ app.layout = html.Div(children=[
         labelStyle={'display': 'inline-block'}
     ),
 
+    # Ползунок для выбора диапазона времени
+    dcc.Slider(
+        id='time-slider',
+        min=0,
+        max=24,
+        step=1,
+        value=12,
+        marks={i: f'{i}:00' for i in range(0, 25)},
+        tooltip={"placement": "bottom", "always_visible": True}
+    ),
+
     # Графики для отображения данных
     dcc.Graph(
         id='activity-over-time',
@@ -184,9 +195,10 @@ app.layout = html.Div(children=[
     [Input('nickname-dropdown', 'value'),
      Input('date-picker-range', 'start_date'),
      Input('date-picker-range', 'end_date'),
-     Input('action-radio', 'value')]
+     Input('action-radio', 'value'),
+     Input('time-slider', 'value')]
 )
-def update_graph(selected_nicknames, start_date, end_date, selected_action):
+def update_graph(selected_nicknames, start_date, end_date, selected_action, selected_time):
     filtered_df = df[
         (df['Никнейм'].isin(selected_nicknames)) &  # Фильтрация по множеству никнеймов
         (df['Дата'] >= start_date) &
@@ -194,6 +206,11 @@ def update_graph(selected_nicknames, start_date, end_date, selected_action):
         ]
     if selected_action != 'Все':
         filtered_df = filtered_df[filtered_df['Действие'] == selected_action]
+
+    # Фильтрация по времени (если необходимо)
+
+    filtered_df['Час'] = filtered_df['Время'].apply(lambda x: int(x.split(':')[0]))
+    filtered_df = filtered_df[filtered_df['Час'] <= selected_time]
 
     activity_fig = px.histogram(filtered_df, x='Дата', color='Действие',
                                 title='Активность пользователей по дням')
