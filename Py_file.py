@@ -1,6 +1,5 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc, html, Input, Output
 import plotly.express as px
 import pandas as pd
 # Создание экземпляра Dash
@@ -133,6 +132,24 @@ page_actions_fig = px.histogram(df, x='Страница', color='Действи�
 app.layout = html.Div(children=[
     html.H1(children='Дашборд анализа клиентской активности'),
 
+    # Выпадающий список для выбора никнеймов (множественный выбор)
+    dcc.Dropdown(
+        id='nickname-dropdown',
+        options=[{'label': nickname, 'value': nickname} for nickname in df['Никнейм'].unique()],
+        value=['ivan123'],  # Установить значение по умолчанию как список
+        multi=True,  # Разрешить множественный выбор
+        placeholder="Выберите никнеймы"
+    ),
+
+    # Выбор диапазона дат
+    dcc.DatePickerRange(
+        id='date-picker-range',
+        start_date=df['Дата'].min(),
+        end_date=df['Дата'].max(),
+        display_format='YYYY-MM-DD'
+    ),
+
+    # Графики для отображения данных
     dcc.Graph(
         id='activity-over-time',
         figure=activity_fig
@@ -143,6 +160,29 @@ app.layout = html.Div(children=[
         figure=page_actions_fig
     )
 ])
+
+# Обновление графиков на основе выбранных фильтров
+@app.callback(
+    [Output('activity-over-time', 'figure'),
+     Output('page-actions', 'figure')],
+    [Input('nickname-dropdown', 'value'),
+     Input('date-picker-range', 'start_date'),
+     Input('date-picker-range', 'end_date')]
+)
+def update_graph(selected_nicknames, start_date, end_date):
+    filtered_df = df[
+        (df['Никнейм'].isin(selected_nicknames)) &  # Фильтрация по множеству никнеймов
+        (df['Дата'] >= start_date) &
+        (df['Дата'] <= end_date)
+        ]
+
+    activity_fig = px.histogram(filtered_df, x='Дата', color='Действие',
+                                title='Активность пользователей по дням')
+
+    page_actions_fig = px.histogram(filtered_df, x='Страница', color='Действие',
+                                    title='Количество действий по страницам')
+
+    return activity_fig, page_actions_fig
 
 # Запуск приложения
 if __name__ == '__main__':
