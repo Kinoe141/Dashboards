@@ -149,6 +149,22 @@ app.layout = html.Div(children=[
         display_format='YYYY-MM-DD'
     ),
 
+    #Радио - кнопки для выбора действия
+    dcc.RadioItems(
+        id='action-radio',
+        options=[
+            {'label': 'Все действия', 'value': 'Все'},
+            {'label': 'Просмотр', 'value': 'Просмотр'},
+            {'label': 'Редактирование', 'value': 'Редактирование'},
+            {'label': 'Скачивание', 'value': 'Скачивание'},
+            {'label': 'Комментарий', 'value': 'Комментарий'},
+            {'label': 'Авторизация', 'value': 'Авторизация'},
+            {'label': 'Диавторизация', 'value': 'Диавторизация'}
+        ],
+        value='Все',
+        labelStyle={'display': 'inline-block'}
+    ),
+
     # Графики для отображения данных
     dcc.Graph(
         id='activity-over-time',
@@ -167,14 +183,17 @@ app.layout = html.Div(children=[
      Output('page-actions', 'figure')],
     [Input('nickname-dropdown', 'value'),
      Input('date-picker-range', 'start_date'),
-     Input('date-picker-range', 'end_date')]
+     Input('date-picker-range', 'end_date'),
+     Input('action-radio', 'value')]
 )
-def update_graph(selected_nicknames, start_date, end_date):
+def update_graph(selected_nicknames, start_date, end_date, selected_action):
     filtered_df = df[
         (df['Никнейм'].isin(selected_nicknames)) &  # Фильтрация по множеству никнеймов
         (df['Дата'] >= start_date) &
         (df['Дата'] <= end_date)
         ]
+    if selected_action != 'Все':
+        filtered_df = filtered_df[filtered_df['Действие'] == selected_action]
 
     activity_fig = px.histogram(filtered_df, x='Дата', color='Действие',
                                 title='Активность пользователей по дням')
