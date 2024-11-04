@@ -21,63 +21,77 @@ activity_fig = px.histogram(df, x='Дата', color='Действие', title='�
 page_actions_fig = px.histogram(df, x='Страница', color='Действие', title='Количество действий по страницам')
 
 # Определение макета дашборда
-app.layout = html.Div(children=[
-    html.H1(children='Дашборд анализа клиентской активности'),
+app.layout = html.Div(style={'padding': '20px'}, children=[
+    html.H1(children='Анализ клиентской активности', style={'textAlign': 'center'}),
 
-    # Выпадающий список для выбора никнеймов (множественный выбор)
-    dcc.Dropdown(
-        id='nickname-dropdown',
-        options=[{'label': nickname, 'value': nickname} for nickname in df['Никнейм'].unique()],
-        value=['ivan123'],  # Установить значение по умолчанию как список
-        multi=True,  # Разрешить множественный выбор
-        placeholder="Выберите никнеймы"
-    ),
+    html.Div(children='''
+        Этот дашборд предоставляет возможность анализа активности пользователей на платформе.
+        Вы можете фильтровать данные по никнейму, диапазону дат, действиям и времени, а также 
+        визуализировать результаты в виде графиков.
+    ''', style={'textAlign': 'center', 'marginBottom': '20px'}),
 
-    # Выбор диапазона дат
-    dcc.DatePickerRange(
-        id='date-picker-range',
-        start_date=df['Дата'].min(),
-        end_date=df['Дата'].max(),
-        display_format='YYYY-MM-DD'
-    ),
+    html.Div([
+        html.Div([
+            dcc.Dropdown(
+                id='nickname-dropdown',
+                options=[{'label': nickname, 'value': nickname} for nickname in df['Никнейм'].unique()],
+                value=['ivan123'],  # Установить значение по умолчанию как список
+                multi=True,  # Разрешить множественный выбор
+                placeholder="Выберите никнеймы"
+            ),
+        ], style={'width': '48%', 'display': 'inline-block'}),
 
-    # Радио-кнопки для выбора действия
-    dcc.RadioItems(
-        id='action-radio',
-        options=[
-            {'label': 'Все действия', 'value': 'Все'},
-            {'label': 'Просмотр', 'value': 'Просмотр'},
-            {'label': 'Редактирование', 'value': 'Редактирование'},
-            {'label': 'Скачивание', 'value': 'Скачивание'},
-            {'label': 'Комментарий', 'value': 'Комментарий'},
-            {'label': 'Авторизация', 'value': 'Авторизация'},
-            {'label': 'Диавторизация', 'value': 'Диавторизация'}
-        ],
-        value='Все',
-        labelStyle={'display': 'inline-block'}
-    ),
+        html.Div([
+            dcc.DatePickerRange(
+                id='date-picker-range',
+                start_date=df['Дата'].min(),
+                end_date=df['Дата'].max(),
+                display_format='YYYY-MM-DD'
+            ),
+        ], style={'width': '48%', 'display': 'inline-block'}),
+    ], style={'display': 'flex', 'justifyContent': 'space-between'}),
 
-    # Ползунок для выбора диапазона времени
-    dcc.Slider(
-        id='time-slider',
-        min=0,
-        max=24,
-        step=1,
-        value=12,
-        marks={i: f'{i}:00' for i in range(0, 25)},
-        tooltip={"placement": "bottom", "always_visible": True}
-    ),
+    html.Div([
+        dcc.RadioItems(
+            id='action-radio',
+            options=[
+                {'label': 'Все действия', 'value': 'Все'},
+                {'label': 'Просмотр', 'value': 'Просмотр'},
+                {'label': 'Редактирование', 'value': 'Редактирование'},
+                {'label': 'Скачивание', 'value': 'Скачивание'},
+                {'label': 'Комментарий', 'value': 'Комментарий'},
+                {'label': 'Авторизация', 'value': 'Авторизация'},
+                {'label': 'Диавторизация', 'value': 'Диавторизация'}
+            ],
+            value='Все',
+            labelStyle={'display': 'inline-block'}
+        ),
+    ], style={'marginTop': '20px'}),
+
+    html.Div([
+        dcc.Slider(
+            id='time-slider',
+            min=0,
+            max=24,
+            step=1,
+            value=12,
+            marks={i: f'{i}:00' for i in range(0, 25)},
+            tooltip={"placement": "bottom", "always_visible": True}
+        ),
+    ], style={'marginTop': '20px'}),
 
     # Графики для отображения данных
-    dcc.Graph(
-        id='activity-over-time',
-        figure=activity_fig
-    ),
+    html.Div([
+        dcc.Graph(
+            id='activity-over-time',
+            figure=activity_fig
+        ),
 
-    dcc.Graph(
-        id='page-actions',
-        figure=page_actions_fig
-    )
+        dcc.Graph(
+            id='page-actions',
+            figure=page_actions_fig
+        )
+    ])
 ])
 
 
